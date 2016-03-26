@@ -1,0 +1,52 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../c3-chart.html">
+  </head>
+  <body>
+
+    <!-- You can use the document as a place to set up your fixtures. -->
+    <c3-chart></c3-chart>
+
+    <script>
+      var myEl = document.querySelector('c3-chart');
+
+      suite('<c3-chart>', function() {
+
+        test('defines the "author" property', function() {
+          assert.equal(myEl.author.name, 'Dimitri Glazkov');
+          assert.equal(myEl.author.image, 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg');
+        });
+
+        test('says hello', function() {
+          assert.equal(myEl.sayHello(), 'c3-chart says, Hello World!');
+
+          var greetings = myEl.sayHello('greetings Earthlings');
+          assert.equal(greetings, 'c3-chart says, greetings Earthlings');
+        });
+
+        test('fires lasers', function(done) {
+          myEl.addEventListener('c3-chart-lasers', function(event) {
+            assert.equal(event.detail.sound, 'Pew pew!');
+            done();
+          });
+          myEl.fireLasers();
+        });
+
+      });
+    </script>
+
+  </body>
+</html>

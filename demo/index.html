@@ -1,0 +1,37 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>c3-chart Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../c3-chart.html">
+  </head>
+  <body>
+
+    <p>An example of <code>&lt;c3-chart&gt;</code>:</p>
+
+    <button>Load data</button>
+
+    <c3-chart>
+    </c3-chart>
+
+    <script>
+      var data = {
+        columns: [
+          ['data1', 30, 200, 100, 400, 150, 250],
+          ['data2', 50, 20, 10, 40, 15, 25]
+        ]
+      };
+      document.querySelector('button').addEventListener('click', function() {
+        document.querySelector('c3-chart').load(data);
+      });
+    </script>
+
+  </body>
+</html>
