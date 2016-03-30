@@ -38,9 +38,6 @@ Example:
     properties: {
 
       /**
-       * Describes the author of the element, but is really just an excuse to
-       * show off JSDoc annotations.
-       *
        * @type {{columns: Array, axes: Object}}
        */
       data: {
@@ -62,13 +59,15 @@ Example:
     attached: function() {
       this.chart = c3.generate({
         bindto: '#chart',
-        data: this.data
+        data: this.data,
+        axis: this.axis
       });
       return this.chart;
     },
 
     detached: function() {
-      return this.chart.destroy();
+      if (this.chart)
+        return this.chart.destroy();
     },
 
     // Element Behavior
