@@ -7,7 +7,11 @@ This code may only be used under the BSD style license found at http://polymer.g
 <script src="../d3/d3.min.js"></script>
 <script src="../c3/c3.min.js"></script>
 <link rel="stylesheet" href="../c3/c3.min.css">
-
+<style>
+  #chart .c3-line{
+    stroke-width: 2px !important ;
+  }
+</style>
 <!--
 Chart element using the C3 library.
 
@@ -18,9 +22,6 @@ Example:
 @demo
 -->
 <dom-module id="c3-chart">
-  <style>
-
-  </style>
 
   <template>
     <div id="chart"></div>
@@ -41,12 +42,30 @@ Example:
        * @type {{columns: Array, axes: Object}}
        */
       data: {
-          type: Object,
-          value: {columns: []}
+        type: Object,
+        value: {columns: [], type: 'spline'}
       },
 
       axis: {
-          type: Object,
+        type: Object,
+        value: {
+          x: {
+            type: 'timeseries'
+          }
+        }
+      },
+
+      point: {
+        type: Object,
+        value: {
+          r: 0,
+          focus: {
+            expand: {
+              enabled: true,
+              r: 3
+            }
+          }
+        }
       }
     },
 
@@ -60,6 +79,7 @@ Example:
       this.chart = c3.generate({
         bindto: '#chart',
         data: this.data,
+        point: this.point,
         axis: this.axis
       });
       return this.chart;
