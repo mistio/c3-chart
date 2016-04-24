@@ -65,7 +65,8 @@ Example:
               r: 3
             }
           }
-        }
+        },
+        chart: Object
       }
     },
 
@@ -108,6 +109,10 @@ Example:
       */
     unload: function(data) {
       return this.chart.load(data);;
+    },
+
+    resize: function(data) {
+      return this.chart.resize(data);
     },
 
     show: function(targetIds, options) {
