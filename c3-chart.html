@@ -8,7 +8,8 @@ This code may only be used under the BSD style license found at http://polymer.g
 <script src="../c3/c3.min.js"></script>
 <link rel="stylesheet" href="../c3/c3.min.css">
 <style>
-  #chart .c3-line{
+
+div[id^="+this.chartid+"] .c3-line{
     stroke-width: 2px !important ;
   }
 </style>
@@ -24,7 +25,7 @@ Example:
 <dom-module id="c3-chart">
 
   <template>
-    <div id="chart"></div>
+    <div id={{chartid}}></div>
     <content></content>
   </template>
 
@@ -41,20 +42,23 @@ Example:
       /**
        * @type {{columns: Array, axes: Object}}
        */
+      chartid:{
+        type:String,
+      },
+
       data: {
         type: Object,
-        value: {columns: [], type: 'spline'}
+        value: {columns: [], type: 'spline',groups: []},
       },
 
       axis: {
         type: Object,
         value: {
           x: {
-            type: 'timeseries'
+            type: 'timeseries',
           }
         }
       },
-
       point: {
         type: Object,
         value: {
@@ -77,18 +81,22 @@ Example:
     },
 
     attached: function() {
-      this.chart = c3.generate({
+      console.warn('attaching chart');
+      /*this.chart = c3.generate({
         bindto: '#chart',
         data: this.data,
         point: this.point,
         axis: this.axis
-      });
-      return this.chart;
+      });*/
+      //return this.chart;
     },
 
     detached: function() {
-      if (this.chart)
-        return this.chart.destroy();
+      //console.warn('detaching c3-chart');
+      if (this.chart) {
+        //console.warn('destroying chart');
+        //return this.chart.destroy();
+      }
     },
 
     // Element Behavior
@@ -98,8 +106,20 @@ Example:
      *
      * @param {object} the data to load.
      */
-    load: function(data) {
+    load: function(data) { //'#chart'
+      this.chart = c3.generate({
+        bindto: "div[id^="+this.chartid+"]",
+        data: this.data,
+        point: this.point,
+        axis: this.axis
+      });
       return this.chart.load(data);
+    },
+
+    destroy: function() {
+      //console.warn('destroying chart');
+      //if (this.chart)
+        //return this.chart.destroy()
     },
 
      /**
@@ -108,7 +128,7 @@ Example:
       * @param {object} the data to unload.
       */
     unload: function(data) {
-      return this.chart.load(data);;
+      return this.chart.load(data);
     },
 
     resize: function(data) {
