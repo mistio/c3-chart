@@ -43,13 +43,13 @@ Example:
             chartid: {
                 type: String,
             },
-
             data: {
                 type: Object,
                 value: {
                     columns: [],
                     type: 'spline',
                     groups: [],
+                    size:[],
                 },
             },
             axis: {
@@ -102,9 +102,16 @@ Example:
         load: function(data) { //'#chart'
             this.chart = c3.generate({
                 bindto: "div[id^=" + this.chartid + "]",
+                size: this.size,
                 data: this.data,
                 point: this.point,
                 axis: this.axis
+            });
+            //we do this here because outside after the initial resize it goes back to the default state
+            if(data.size!=null)
+            this.resize({
+                height: data.size[1]-120,
+                width: data.size[0]-20
             });
             return this.chart.load(data);
         },
@@ -121,6 +128,7 @@ Example:
         },
 
         resize: function(data) {
+            console.log("resizing", data);
             return this.chart.resize(data);
         },
 
