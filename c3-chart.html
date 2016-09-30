@@ -49,7 +49,7 @@ Example:
                     columns: [],
                     type: 'spline',
                     groups: [],
-                    size:[],
+                    size: []
                 },
             },
             axis: {
@@ -108,11 +108,11 @@ Example:
                 axis: this.axis
             });
             //we do this here because outside after the initial resize it goes back to the default state
-            if(data.size!=null)
-            this.resize({
-                height: data.size[1]-120,
-                width: data.size[0]-20
-            });
+            if (data.size != null)
+                this.resize({
+                    height: data.size[1] - 120,
+                    width: data.size[0] - 20
+                });
             return this.chart.load(data);
         },
 
