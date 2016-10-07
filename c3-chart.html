@@ -8,9 +8,9 @@ This code may only be used under the BSD style license found at http://polymer.g
 <script src="../c3/c3.min.js"></script>
 <link rel="stylesheet" href="../c3/c3.min.css">
 <style>
-  #chart .c3-line{
-    stroke-width: 2px !important ;
-  }
+    div[id^="+this.chartid+"] .c3-line {
+        stroke-width: 2px !important;
+    }
 </style>
 <!--
 Chart element using the C3 library.
@@ -23,7 +23,7 @@ Example:
 -->
 <dom-module id="c3-chart">
 
-  <template>
+    <template>
     <div id={{chartid}}></div>
     <content></content>
   </template>
@@ -31,12 +31,62 @@ Example:
 </dom-module>
 
 <script>
+    Polymer({
 
-  Polymer({
+        is: 'c3-chart',
 
-    is: 'c3-chart',
+        properties: {
 
-    properties: {
+            /**
+             * @type {{columns: Array, axes: Object}}
+             */
+            chartid: {
+                type: String,
+            },
+            data: {
+                type: Object,
+                value: {
+                    columns: [],
+                    type: 'spline',
+                    groups: [],
+                    size: []
+                },
+            },
+            axis: {
+                type: Object,
+                value: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y-%m-%d %H:%M:%S'
+                        }
+                    }
+                }
+            },
+            point: {
+                type: Object,
+                value: {
+                    r: 0,
+                    focus: {
+                        expand: {
+                            enabled: true,
+                            r: 3
+                        }
+                    }
+                },
+                chart: Object
+            }
+        },
+
+        // Element Lifecycle
+
+        ready: function() {
+
+        },
+
+        attached: function() {
+            console.warn('attaching chart');
+        },
 
       /**
        * @type {{columns: Array, axes: Object}}
@@ -167,4 +217,16 @@ Example:
     }
   });
 
+        revert: function(targetIds) {
+            return this.chart.revert(targetIds);
+        },
+
+        transform: function(type, targetIds) {
+            return this.chart.transform(type, targetIds);
+        },
+
+        groups: function(groups) {
+            return this.chart.groups(groups);
+        }
+    });
 </script>
