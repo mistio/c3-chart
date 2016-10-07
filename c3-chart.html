@@ -24,7 +24,7 @@ Example:
 <dom-module id="c3-chart">
 
   <template>
-    <div id="chart"></div>
+    <div id={{chartid}}></div>
     <content></content>
   </template>
 
@@ -41,6 +41,9 @@ Example:
       /**
        * @type {{columns: Array, axes: Object}}
        */
+       chartid: {
+           type: String,
+       },
       data: {
         type: Object,
         value: {columns: [], type: 'spline'}
@@ -94,7 +97,7 @@ Example:
      */
     load: function(data) {
       this.chart = c3.generate({
-        bindto: '#chart',
+        bindto: "div[id^=" + this.chartid + "]",
         data: this.data,
         point: this.point,
         axis: this.axis
