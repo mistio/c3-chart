@@ -77,12 +77,6 @@ Example:
     },
 
     attached: function() {
-      this.chart = c3.generate({
-        bindto: '#chart',
-        data: this.data,
-        point: this.point,
-        axis: this.axis
-      });
       return this.chart;
     },
 
@@ -99,6 +93,12 @@ Example:
      * @param {object} the data to load.
      */
     load: function(data) {
+      this.chart = c3.generate({
+        bindto: '#chart',
+        data: this.data,
+        point: this.point,
+        axis: this.axis
+      });
       return this.chart.load(data);
     },
 
