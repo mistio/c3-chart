@@ -8,9 +8,9 @@ This code may only be used under the BSD style license found at http://polymer.g
 <script src="../c3/c3.min.js"></script>
 <link rel="stylesheet" href="../c3/c3.min.css">
 <style>
-  #chart .c3-line{
-    stroke-width: 2px !important ;
-  }
+    #chart .c3-line {
+        stroke-width: 2px !important;
+    }
 </style>
 <!--
 Chart element using the C3 library.
@@ -23,7 +23,7 @@ Example:
 -->
 <dom-module id="c3-chart">
 
-  <template>
+    <template>
     <div id={{chartid}}></div>
     <content></content>
   </template>
@@ -31,140 +31,146 @@ Example:
 </dom-module>
 
 <script>
+    Polymer({
 
-  Polymer({
+        is: 'c3-chart',
 
-    is: 'c3-chart',
+        properties: {
 
-    properties: {
+            /**
+             * @type {{columns: Array, axes: Object}}
+             */
+            chartid: {
+                type: String,
+            },
+            data: {
+                type: Object,
+                value: {
+                    columns: [],
+                    type: 'spline'
+                }
+            },
+            axis: {
+                type: Object,
+                value: {
+                    x: {
+                        type: 'timeseries'
+                    }
+                }
+            },
 
-      /**
-       * @type {{columns: Array, axes: Object}}
-       */
-       chartid: {
-           type: String,
-       },
-      data: {
-        type: Object,
-        value: {columns: [], type: 'spline'}
-      },
-
-      axis: {
-        type: Object,
-        value: {
-          x: {
-            type: 'timeseries'
-          }
-        }
-      },
-
-      point: {
-        type: Object,
-        value: {
-          r: 0,
-          focus: {
-            expand: {
-              enabled: true,
-              r: 3
+            point: {
+                type: Object,
+                value: {
+                    r: 0,
+                    focus: {
+                        expand: {
+                            enabled: true,
+                            r: 3
+                        }
+                    }
+                },
+                chart: Object
             }
-          }
         },
-        chart: Object
-      }
-    },
 
-    // Element Lifecycle
+        // Element Lifecycle
 
-    ready: function() {
+        ready: function() {
 
-    },
+        },
 
-    attached: function() {
-      return this.chart;
-    },
+        attached: function() {
+            return this.chart;
+        },
 
-    detached: function() {
-      if (this.chart)
-        return this.chart.destroy();
-    },
+        detached: function() {
+            if (this.chart) {
+                console.log("c3 destroyed");
+                return this.chart.destroy();
+            }
+        },
 
-    // Element Behavior
+        // Element Behavior
 
-    /*
-     * Load data to chart.
-     *
-     * @param {object} the data to load.
-     */
-    load: function(data) {
-      this.chart = c3.generate({
-        bindto: "div[id^=" + this.chartid + "]",
-        data: this.data,
-        point: this.point,
-        axis: this.axis
-      });
-      return this.chart.load(data);
-    },
+        /*
+         * Load data to chart.
+         *
+         * @param {object} the data to load.
+         */
+        load: function(data) {
+            console.log("loading data to chart");
+            this.chart = c3.generate({
+                bindto: "div[id^=" + this.chartid + "]",
+                data: this.data,
+                point: this.point,
+                axis: this.axis,
+                zoom: {
+                    enabled: true
+                }
+            });
+            return this.chart.load(data);
+        },
 
-     /**
-      * Unload data from chart.
-      *
-      * @param {object} the data to unload.
-      */
-    unload: function(data) {
-      return this.chart.load(data);;
-    },
+        /**
+         * Unload data from chart.
+         *
+         * @param {object} the data to unload.
+         */
+        unload: function(data) {
+            return this.chart.load(data);;
+        },
 
-    resize: function(data) {
-      return this.chart.resize(data);
-    },
+        resize: function(data) {
+            return this.chart.resize(data);
+        },
 
-    show: function(targetIds, options) {
-      return this.chart.show(targetIds, options);
-    },
+        show: function(targetIds, options) {
+            return this.chart.show(targetIds, options);
+        },
 
-    hide: function(targetIds, options) {
-      return this.chart.hide(targetIds, options);
-    },
+        hide: function(targetIds, options) {
+            return this.chart.hide(targetIds, options);
+        },
 
-    toggle: function(targetIds, options) {
-      return this.chart.toggle(targetIds, options);
-    },
+        toggle: function(targetIds, options) {
+            return this.chart.toggle(targetIds, options);
+        },
 
-    flow: function(data) {
-      return this.chart.flow(data);
-    },
+        flow: function(data) {
+            return this.chart.flow(data);
+        },
 
-    select: function(ids, indices, resetOthers) {
-      return this.chart.select(ids, indices, resetOthers);
-    },
+        select: function(ids, indices, resetOthers) {
+            return this.chart.select(ids, indices, resetOthers);
+        },
 
-    unselect: function(ids, indices) {
-      return this.chart.unselect(ids, indices);
-    },
+        unselect: function(ids, indices) {
+            return this.chart.unselect(ids, indices);
+        },
 
-    selected: function(targetId) {
-      return this.chart.selected(targetId);
-    },
+        selected: function(targetId) {
+            return this.chart.selected(targetId);
+        },
 
-    focus: function(targetIds) {
-      return this.chart.focus(targetIds);
-    },
+        focus: function(targetIds) {
+            return this.chart.focus(targetIds);
+        },
 
-    defocus: function(targetIds) {
-      return this.chart.defocus(targetIds);
-    },
+        defocus: function(targetIds) {
+            return this.chart.defocus(targetIds);
+        },
 
-    revert: function(targetIds) {
-      return this.chart.revert(targetIds);
-    },
+        revert: function(targetIds) {
+            return this.chart.revert(targetIds);
+        },
 
-    transform: function(type, targetIds) {
-      return this.chart.transform(type, targetIds);
-    },
+        transform: function(type, targetIds) {
+            return this.chart.transform(type, targetIds);
+        },
 
-    groups: function(groups) {
-      return this.chart.groups(groups);
-    }
-  });
-
+        groups: function(groups) {
+            return this.chart.groups(groups);
+        }
+    });
 </script>
