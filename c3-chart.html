@@ -60,17 +60,18 @@ Example:
             },
 
             point: {
-                type: Object,
-                value: {
-                    r: 0,
-                    focus: {
-                        expand: {
-                            enabled: true,
-                            r: 3
-                        }
-                    }
-                },
-                chart: Object
+                //type: Object,
+                show:true,
+                // value: {
+                //     r: 0,
+                //     focus: {
+                //         expand: {
+                //             enabled: true,
+                //             r: 3
+                //         }
+                //     }
+                // },
+                // chart: Object
             }
         },
 
@@ -84,7 +85,7 @@ Example:
             return this.chart;
         },
 
-        detached: function() {
+        destroy: function() {
             if (this.chart) {
                 console.log("c3 destroyed");
                 return this.chart.destroy();
