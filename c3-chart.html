@@ -22,9 +22,8 @@ Example:
 @demo
 -->
 <dom-module id="c3-chart">
-
   <template>
-    <div id={{chartId}}></div>
+    <div id=[[chartId]]></div>
     <content></content>
   </template>
 
@@ -36,7 +35,6 @@ Example:
         is: 'c3-chart',
 
         properties: {
-
             /**
              * @type {{columns: Array, axes: Object}}
              */
@@ -48,39 +46,26 @@ Example:
                 value: {
                     columns: [],
                     type: 'spline'
-                }
+                },
             },
             axis: {
                 type: Object,
                 value: {
                     x: {
-                        type: 'timeseries'
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y-%m-%d %H:%M:%S'
+                        }
                     }
                 }
             },
 
             point: {
-                //type: Object,
                 show:true,
-                // value: {
-                //     r: 0,
-                //     focus: {
-                //         expand: {
-                //             enabled: true,
-                //             r: 3
-                //         }
-                //     }
-                // },
-                // chart: Object
             }
         },
 
         // Element Lifecycle
-
-        ready: function() {
-
-        },
-
         attached: function() {
             return this.chart;
         },
@@ -90,6 +75,14 @@ Example:
                 console.log("c3 destroyed");
                 return this.chart.destroy();
             }
+        },
+
+        attached: function() {
+            console.warn('attaching chart');
+        },
+
+        detached: function() {
+
         },
 
         // Element Behavior
@@ -123,6 +116,60 @@ Example:
         },
 
         resize: function(data) {
+            return this.chart.resize(data);
+        },
+
+        show: function(targetIds, options) {
+            return this.chart.show(targetIds, options);
+        },
+
+        hide: function(targetIds, options) {
+            return this.chart.hide(targetIds, options);
+        },
+
+        toggle: function(targetIds, options) {
+            return this.chart.toggle(targetIds, options);
+        },
+
+        flow: function(data) {
+            return this.chart.flow(data);
+        },
+
+        select: function(ids, indices, resetOthers) {
+            return this.chart.select(ids, indices, resetOthers);
+        },
+
+        unselect: function(ids, indices) {
+            return this.chart.unselect(ids, indices);
+        },
+
+        selected: function(targetId) {
+            return this.chart.selected(targetId);
+        },
+
+        focus: function(targetIds) {
+            return this.chart.focus(targetIds);
+        },
+
+        defocus: function(targetIds) {
+            return this.chart.defocus(targetIds);
+        },
+
+        destroy: function() {
+
+        },
+
+        /**
+         * Unload data from chart.
+         *
+         * @param {object} the data to unload.
+         */
+        unload: function(data) {
+            return this.chart.load(data);
+        },
+
+        resize: function(data) {
+            console.log("resizing", data);
             return this.chart.resize(data);
         },
 
