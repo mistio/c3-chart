@@ -8,7 +8,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 <script src="../c3/c3.min.js"></script>
 <link rel="stylesheet" href="../c3/c3.min.css">
 <style>
-    div[id^="+this.chartid+"] .c3-line {
+    #chart .c3-line {
         stroke-width: 2px !important;
     }
 </style>
@@ -22,9 +22,8 @@ Example:
 @demo
 -->
 <dom-module id="c3-chart">
-
-    <template>
-    <div id={{chartid}}></div>
+  <template>
+    <div id=[[chartId]]></div>
     <content></content>
   </template>
 
@@ -36,20 +35,17 @@ Example:
         is: 'c3-chart',
 
         properties: {
-
             /**
              * @type {{columns: Array, axes: Object}}
              */
-            chartid: {
+            chartId: {
                 type: String,
             },
             data: {
                 type: Object,
                 value: {
                     columns: [],
-                    type: 'spline',
-                    groups: [],
-                    size: []
+                    type: 'spline'
                 },
             },
             axis: {
@@ -63,25 +59,22 @@ Example:
                     }
                 }
             },
+
             point: {
-                type: Object,
-                value: {
-                    r: 0,
-                    focus: {
-                        expand: {
-                            enabled: true,
-                            r: 3
-                        }
-                    }
-                },
-                chart: Object
+                show:true,
             }
         },
 
         // Element Lifecycle
+        attached: function() {
+            return this.chart;
+        },
 
-        ready: function() {
-
+        destroy: function() {
+            if (this.chart) {
+                console.log("c3 destroyed");
+                return this.chart.destroy();
+            }
         },
 
         attached: function() {
@@ -99,24 +92,72 @@ Example:
          *
          * @param {object} the data to load.
          */
-        load: function(data) { //'#chart'
+        load: function(data) {
+            console.log("loading data to chart");
             this.chart = c3.generate({
-                bindto: "div[id^=" + this.chartid + "]",
-                size: this.size,
+                bindto: "div[id^=" + this.chartId + "]",
                 data: this.data,
                 point: this.point,
-                axis: this.axis
+                axis: this.axis,
+                zoom: {
+                    enabled: true
+                }
             });
-            //we do this here because outside after the initial resize it goes back to the default state
-            if (data.size != null)
-                this.resize({
-                    height: data.size[1] - 120,
-                    width: data.size[0] - 20
-                });
             return this.chart.load(data);
         },
 
-        destroy: function() {},
+        /**
+         * Unload data from chart.
+         *
+         * @param {object} the data to unload.
+         */
+        unload: function(data) {
+            return this.chart.load(data);;
+        },
+
+        resize: function(data) {
+            return this.chart.resize(data);
+        },
+
+        show: function(targetIds, options) {
+            return this.chart.show(targetIds, options);
+        },
+
+        hide: function(targetIds, options) {
+            return this.chart.hide(targetIds, options);
+        },
+
+        toggle: function(targetIds, options) {
+            return this.chart.toggle(targetIds, options);
+        },
+
+        flow: function(data) {
+            return this.chart.flow(data);
+        },
+
+        select: function(ids, indices, resetOthers) {
+            return this.chart.select(ids, indices, resetOthers);
+        },
+
+        unselect: function(ids, indices) {
+            return this.chart.unselect(ids, indices);
+        },
+
+        selected: function(targetId) {
+            return this.chart.selected(targetId);
+        },
+
+        focus: function(targetIds) {
+            return this.chart.focus(targetIds);
+        },
+
+        defocus: function(targetIds) {
+            return this.chart.defocus(targetIds);
+        },
+
+        destroy: function() {
+
+        },
 
         /**
          * Unload data from chart.
