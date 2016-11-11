@@ -8,7 +8,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 <link rel="import" href="c3.html">
 
 <style>
-    #chart .c3-line {
+    .c3-line {
         stroke-width: 2px !important;
     }
 </style>
@@ -56,12 +56,34 @@ Example:
                         tick: {
                             format: '%Y-%m-%d %H:%M:%S'
                         }
+                    },
+                    y: {
+                        label: {
+                            text: '',
+                            position: 'inner-top'
+                        },
+                        min: 0,
+                        padding: {
+                            bottom: 10
+                        }
                     }
                 }
             },
-
             point: {
-                show:true,
+                type: Object,
+                value: {
+                    show: false,
+                    focus: {
+                        show: true,
+                        expand: {
+                            r: 1
+                        }
+                    }
+                }
+            },
+            line: {
+                type: Object,
+                value: { connectNull: false }
             }
         },
 
