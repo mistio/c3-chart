@@ -112,6 +112,7 @@ Example:
             this.chart = c3.generate({
                 bindto: "div[id^=" + this.chartId + "]",
                 data: this.data,
+                spline: {'interpolation': {'type': 'monotone'}},
                 point: this.point,
                 axis: this.axis,
                 zoom: {
