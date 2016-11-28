@@ -22,10 +22,10 @@ Example:
 @demo
 -->
 <dom-module id="c3-chart">
-  <template>
-    <div id="[[chartId]]"></div>
-    <content></content>
-  </template>
+    <template>
+        <div id="[[chartId]]"></div>
+        <content></content>
+    </template>
 
 </dom-module>
 
@@ -83,7 +83,9 @@ Example:
             },
             line: {
                 type: Object,
-                value: { connectNull: false }
+                value: {
+                    connectNull: false
+                }
             }
         },
 
@@ -112,7 +114,11 @@ Example:
             this.chart = c3.generate({
                 bindto: "div[id^=" + this.chartId + "]",
                 data: this.data,
-                spline: {'interpolation': {'type': 'monotone'}},
+                spline: {
+                    'interpolation': {
+                        'type': 'monotone'
+                    }
+                },
                 point: this.point,
                 axis: this.axis,
                 zoom: {
